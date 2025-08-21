@@ -18,7 +18,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    // ✅ Get ALL users
+    // Get ALL users
     @GetMapping
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll().stream()
