@@ -9,5 +9,5 @@ public class CritiqueHubApplication {
     public static void main(String[] args) {
         SpringApplication.run(CritiqueHubApplication.class, args);
     }
-
 }
+

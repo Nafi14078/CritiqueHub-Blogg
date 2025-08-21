@@ -1,36 +1,148 @@
 package com.critiquehub.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class User {
-
+public class User implements UserDetails {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, unique = true, length = 50)
+    
+    @NotBlank
+    @Size(min = 3, max = 50)
+    @Column(unique = true, nullable = false)
     private String username;
-
-    @Column(nullable = false, unique = true, length = 100)
+    
+    @NotBlank
+    @Email
+    @Size(max = 100)
+    @Column(unique = true, nullable = false)
     private String email;
-
+    
+    @NotBlank
+    @Size(min = 6, max = 255)
     @Column(nullable = false)
     private String password;
-
-    @Column(nullable = false, length = 20)
-    private String role = "READER";   // default role
-
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.READER;
+    
+    @Column(nullable = false)
     private Boolean enabled = true;
-
-    private LocalDateTime createdAt = LocalDateTime.now();
+    
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+    
+    // Constructors
+    public User() {}
+    
+    public User(String username, String email, String password, Role role) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+    
+    // UserDetails implementation
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.name()));
+    }
+    
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+    
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+    
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+    
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+    
+    // Getters and Setters
+    public Long getId() { 
+        return id; 
+    }
+    
+    public void setId(Long id) { 
+        this.id = id; 
+    }
+    
+    public String getUsername() { 
+        return username; 
+    }
+    
+    public void setUsername(String username) { 
+        this.username = username; 
+    }
+    
+    public String getEmail() { 
+        return email; 
+    }
+    
+    public void setEmail(String email) { 
+        this.email = email; 
+    }
+    
+    public String getPassword() { 
+        return password; 
+    }
+    
+    public void setPassword(String password) { 
+        this.password = password; 
+    }
+    
+    public Role getRole() { 
+        return role; 
+    }
+    
+    public void setRole(Role role) { 
+        this.role = role; 
+    }
+    
+    public Boolean getEnabled() { 
+        return enabled; 
+    }
+    
+    public void setEnabled(Boolean enabled) { 
+        this.enabled = enabled; 
+    }
+    
+    public LocalDateTime getCreatedAt() { 
+        return createdAt; 
+    }
+    
+    public void setCreatedAt(LocalDateTime createdAt) { 
+        this.createdAt = createdAt; 
+    }
+    
+    // Role Enum
+    public enum Role {
+        READER, AUTHOR, ADMIN
+    }
 }
