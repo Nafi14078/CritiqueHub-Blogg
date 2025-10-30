@@ -25,6 +25,7 @@ const PublishForm = () => {
   const handleCloseEvent = () => {
     setEditorState("editor");
   };
+
   const handleTitleKeyDown = (e) => {
     if (e.keyCode == 13) {
       e.preventDefault();
@@ -40,6 +41,7 @@ const PublishForm = () => {
 
     setBlog({ ...blog, des: input.value });
   };
+
 
   const handleKeyDown = (e) => {
     if (e.keyCode == 13 || e.keyCode == 188) {
@@ -58,7 +60,6 @@ const PublishForm = () => {
       e.target.value = "";
     }
   };
-
   const publishBlog = (e) => {
     if (e.target.className.includes("disable")) {
       return;
@@ -185,5 +186,5 @@ const PublishForm = () => {
     </div>
   );
 };
-
+//----------------publish form--------------------------
 export default PublishForm;

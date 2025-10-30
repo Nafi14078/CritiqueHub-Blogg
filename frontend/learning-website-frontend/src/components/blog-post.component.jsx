@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 const BlogPostCard = ({ content, author }) => {
   let {
+
     publishedAt,
     tags,
     title,
@@ -14,6 +15,7 @@ const BlogPostCard = ({ content, author }) => {
 
   let { fullname, profile_img, username } = author;
   return (
+
     <Link
       to={`/blog/${id}`}
       className="flex gap-8 items-center border-b border-grey pb-5 mb-4"
@@ -31,7 +33,6 @@ const BlogPostCard = ({ content, author }) => {
         <p className="my-3 text-xl font-gelasio leading-7 max-sm:hidden md:max-[1100px]:hidden line-clamp-2">
           {des}
         </p>
-
         <div className="flex gap-4 mt-7">
           <span className="btn-light py-1 px-4">{tags[0]}</span>
           <span className="ml-3 flex items-center gap-2 text-dark-grey">
@@ -49,5 +50,5 @@ const BlogPostCard = ({ content, author }) => {
     </Link>
   );
 };
-
+// -------------------------Blog post--------------------------------
 export default BlogPostCard;
