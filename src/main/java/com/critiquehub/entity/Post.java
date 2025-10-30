@@ -160,9 +160,3 @@ public class Post {
         this.category = category;
     }
 }
-
-enum PostStatus {
-    DRAFT,
-    PUBLISHED,
-    ARCHIVED
-}

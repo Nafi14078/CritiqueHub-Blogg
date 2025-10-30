@@ -105,8 +105,3 @@ public class Like {
         this.likeType = LikeType.COMMENT;
     }
 }
-
-enum LikeType {
-    POST,
-    COMMENT
-}
