@@ -12,3 +12,5 @@ public interface PostService {
     void deletePost(Long id);
     Page<PostResponseDTO> getAllPosts(Pageable pageable);
 }
+
+//------------------------------post -----------------------------
